@@ -1,3 +1,4 @@
+import processing.serial.*;
 import cc.arduino.*;
 
 Arduino arduino;
@@ -41,6 +42,8 @@ void setup() {
   // Arduino 연결
   println("사용 가능한 포트:");
   printArray(Arduino.list());
+
+  
   
   try {
     arduino = new Arduino(this, Arduino.list()[0], 57600);
