@@ -5,31 +5,37 @@
 const int VAL_R = A0;    // R값을 위한 가변저항
 const int VAL_G = A1;    // G값을 위한 가변저항  
 const int VAL_B = A2;    // B값을 위한 가변저항
-const int c1LED_R = A5;     // RGB LED의 R핀
-const int c1LED_G = A4;    // RGB LED의 G핀
-const int c1LED_B = A3;    // RGB LED의 B핀
-const int c2LED_R = 3;     // RGB LED의 R핀
-const int c2LED_G = 4;    // RGB LED의 G핀
-const int c2LED_B = 5;    // RGB LED의 B핀
-const int c3LED_R = 6;     // RGB LED의 R핀
-const int c3LED_G = 7;    // RGB LED의 G핀
-const int c3LED_B = 8;    // RGB LED의 B핀
-const int tLED_R = 9;     // RGB LED의 R핀
-const int tLED_G = 10;    // RGB LED의 G핀
-const int tLED_B = 11;    // RGB LED의 B핀
-const int BUTTON = 13;   // 버튼 핀
+
+const int c1LED_R = A5;     // R 제어용 RGB LED의 R핀
+const int c1LED_G = A4;    // R 제어용RGB LED의 G핀
+const int c1LED_B = A3;    // R 제어용RGB LED의 B핀
+
+const int c2LED_R = 3;     // G 제어용 RGB LED의 R핀
+const int c2LED_G = 4;    // G 제어용 RGB LED의 G핀
+const int c2LED_B = 5;    // G 제어용 RGB LED의 B핀
+
+const int c3LED_R = 6;     // B 제어용 RGB LED의 R핀
+const int c3LED_G = 7;    // B 제어용 RGB LED의 G핀
+const int c3LED_B = 8;    // B 제어용 RGB LED의 B핀
+
+const int tLED_R = 9;     // 조색 RGB LED의 R핀
+const int tLED_G = 10;    // 조색 RGB LED의 G핀
+const int tLED_B = 11;    // 조색 RGB LED의 B핀
+
+const int BUTTON = 13;   // 조색 버튼 핀
 
 // 변수 정의
-int redValue = 0;
-int greenValue = 0;
-int blueValue = 0;
-int ctrl1r = 0;
+int redValue = 0; // R
+int greenValue = 0; // G
+int blueValue = 0; // B
+
+int ctrl1r = 0; // R 제어용 LED
 int ctrl1g = 0;
 int ctrl1b = 0;
-int ctrl2r = 0;
+int ctrl2r = 0; // G 제어용 LED
 int ctrl2g = 0;
 int ctrl2b = 0;
-int ctrl3r = 0;
+int ctrl3r = 0; // B 제어용 LED
 int ctrl3g = 0;
 int ctrl3b = 0;
 bool buttonPressed = false;
@@ -41,31 +47,31 @@ void setup() {
   pinMode(tLED_R, OUTPUT);
   pinMode(tLED_G, OUTPUT);
   pinMode(tLED_B, OUTPUT);
-  pinMode(c1LED_R, OUTPUT);
+  pinMode(c1LED_R, OUTPUT); // R ctrl
   pinMode(c1LED_G, OUTPUT);
   pinMode(c1LED_B, OUTPUT);
-  pinMode(c2LED_R, OUTPUT);
+  pinMode(c2LED_R, OUTPUT); // G ctrl
   pinMode(c2LED_G, OUTPUT);
   pinMode(c2LED_B, OUTPUT);
-  pinMode(c3LED_R, OUTPUT);
+  pinMode(c3LED_R, OUTPUT); // B ctrl
   pinMode(c3LED_G, OUTPUT);
   pinMode(c3LED_B, OUTPUT);
   pinMode(BUTTON, INPUT_PULLUP);  // 내부 풀업 저항 사용
   
-  // 시리얼 통신 시작 (디버깅용)
+  // (디버깅)시리얼 통신 시작
   Serial.begin(9600);
   
-  // LED 초기화 (꺼진 상태)
-  analogWrite(tLED_R, 0);
+  // LED 초기화
+  analogWrite(tLED_R, 0); // TOTAL
   analogWrite(tLED_G, 0);
   analogWrite(tLED_B, 0); 
-  analogWrite(c1LED_R, 0);
+  analogWrite(c1LED_R, 0); // R ctrl
   analogWrite(c1LED_G, 0);
   analogWrite(c1LED_B, 0);
-  analogWrite(c2LED_R, 0);
+  analogWrite(c2LED_R, 0); // G ctrl
   analogWrite(c2LED_G, 0);
   analogWrite(c2LED_B, 0);
-  analogWrite(c3LED_R, 0);
+  analogWrite(c3LED_R, 0); // B ctrl
   analogWrite(c3LED_G, 0);
   analogWrite(c3LED_B, 0);
 }
@@ -99,13 +105,6 @@ void loop() {
   // LED 제어
   if (ledOn) {
     // 버튼이 눌려있을 때 조합된 RGB 값으로 LED 켜기
-
-    while (redValue+greenValue+blueValue <= 0) {
-      analogWrite(c1LED_R, redValue -1);
-      analogWrite(c2LED_G, greenValue -1);
-      analogWrite(c3LED_B, blueValue -1);
-    }
-
     analogWrite(tLED_R, redValue);
     analogWrite(tLED_G, greenValue);
     analogWrite(tLED_B, blueValue);
@@ -127,5 +126,5 @@ void loop() {
   Serial.print(", LED: ");
   Serial.println(ledOn ? "ON" : "OFF");
   
-  delay(50);  // 안정성을 위한 딜레이
+  delay(25);  // 안정성을 위한 딜레이
 }
