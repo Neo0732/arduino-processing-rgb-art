@@ -1,12 +1,12 @@
 import processing.serial.*;
 
-Serial myPort;
+Serial arPort;
 
 // 변수 정의
-int redValue = 0;
-int greenValue = 0;
-int blueValue = 0;
-boolean ledOn = false;
+int ResultRedValue = 0;
+int ResultGreenValue = 0;
+int ResultBlueValue = 0;
+boolean LEDon = false;
 
 // 수신된 데이터 파싱을 위한 변수
 String receivedData = "";
@@ -19,8 +19,8 @@ void setup() {
   printArray(Serial.list());
   
   try {
-    myPort = new Serial(this, "COM8", 9600);
-    myPort.bufferUntil('\n');  // 줄바꿈 문자까지 버퍼링
+    arPort = new Serial(this, "COM8", 9600);
+    arPort.bufferUntil('\n');  // 줄바꿈 문자까지 버퍼링
     println("시리얼 연결 성공: COM8");
   } catch (Exception e) {
     println("시리얼 연결 실패: " + e.getMessage());
@@ -38,10 +38,10 @@ void draw() {
   textAlign(LEFT);
   textSize(16);
   text("RGB 값:", 20, 30);
-  text("R: " + redValue, 20, 60);
-  text("G: " + greenValue, 20, 90);
-  text("B: " + blueValue, 20, 120);
-  text("LED 상태: " + (ledOn ? "ON" : "OFF"), 20, 150);
+  text("R: " + ResultRedValue, 20, 60);
+  text("G: " + ResultGreenValue, 20, 90);
+  text("B: " + ResultBlueValue, 20, 120);
+  text("LED 상태: " + (LEDon ? "ON" : "OFF"), 20, 150);
   
   // 현재 색상을 화면에 표시
   if (ledOn) {
