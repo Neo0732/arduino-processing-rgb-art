@@ -65,6 +65,13 @@ void serialEvent(Serial myPort) {
     
     if (inString != null) {
       inString = trim(inString);
+      
+      // 화면 지우기 신호 확인
+      if (inString.equals("CLEAR")) {
+        clearScreen();
+        return;
+      }
+      
       String[] values = split(inString, ',');
       
       if (values.length == 2) {
@@ -89,9 +96,14 @@ void serialEvent(Serial myPort) {
 
 void keyPressed() {
   if (key == ' ') {  // 스페이스바로 화면 지우기
-    isClearing = true;
-    clearTimer = millis();
+    clearScreen();
   }
+}
+
+// 화면 지우기 함수
+void clearScreen() {
+  isClearing = true;
+  clearTimer = millis();
 }
 
 // 마우스로도 테스트 가능 (Arduino 없이 테스트할 때)
